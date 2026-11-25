@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Car Town Revival</title>
+<style>
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  background:#17212b;
+  color:white;
+  font-family:Arial,sans-serif;
+}
+header {
+  background:#101820;
+  padding:18px;
+  text-align:center;
+  border-bottom:3px solid #e6a52b;
+}
+header h1 { margin:0; color:#ffbd45; }
+.stats {
+  display:flex;
+  justify-content:space-around;
+  padding:14px;
+  background:#263746;
+}
+.garage {
+  margin:18px;
+  padding:20px;
+  min-height:310px;
+  border:3px solid #566575;
+  border-radius:12px;
+  background:linear-gradient(145deg,#59636d,#26313b);
+  text-align:center;
+}
+.car {
+  font-size:105px;
+  margin:40px 0 15px;
+}
+.buttons {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  padding:18px;
+}
+button {
+  padding:17px 8px;
+  border:0;
+  border-radius:9px;
+  background:#e9a52e;
+  color:#17212b;
+  font-weight:bold;
+  font-size:15px;
+}
+button:active { transform:scale(.97); }
+#message {
+  text-align:center;
+  padding:15px;
+  color:#ffcf72;
+  min-height:45px;
+}
+footer {
+  text-align:center;
+  padding:20px;
+  color:#9eabb8;
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>🚗 CAR TOWN</h1>
+  <p>REVIVAL EDITION</p>
+</header>
+
+<div class="stats">
+  <span>💰 <b id="money">5000</b></span>
+  <span>⭐ Level <b id="level">1</b></span>
+</div>
+
+<section class="garage">
+  <h2>MY GARAGE</h2>
+  <div class="car">🏎️</div>
+  <h3>My First Car</h3>
+  <p>Welcome to Car Town!</p>
+</section>
+
+<div class="buttons">
+  <button onclick="buy()">🚘 Buy Car</button>
+  <button onclick="upgrade()">🔧 Upgrade</button>
+  <button onclick="race()">🏁 Race</button>
+  <button onclick="visit()">👥 Friends</button>
+</div>
+
+<div id="message">Welcome back to Car Town!</div>
+
+<footer>Car Town Revival © 2026</footer>
+
+<script>
+let money = 5000;
+let level = 1;
+
+function update() {
+ document.getElementById("money").textContent=money;
+ document.getElementById("level").textContent=level;
+}
+function message(text) {
+ document.getElementById("message").textContent=text;
+}
+function buy() {
+ if(money>=2000) {
+  money-=2000;
+  message("🚘 New car purchased!");
+ } else message("Not enough money!");
+ update();
+}
+function upgrade() {
+ if(money>=500) {
+  money-=500;
+  level++;
+  message("🔧 Car upgraded! Level "+level);
+ } else message("Not enough money!");
+ update();
+}
+function race() {
+ money+=300;
+ message("🏁 Race finished! You earned 300 coins!");
+ update();
+}
+function visit() {
+ message("👥 Friends garage coming soon!");
+}
+</script>
+</body>
+</html>
