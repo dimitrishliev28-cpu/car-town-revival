@@ -23,8 +23,7 @@ h2{color:#ffd16c}
 .scene{
  position:relative;overflow:hidden;height:390px;
  border:5px solid #8c9c9f;border-radius:9px;
- background:#75877b;
- box-shadow:inset 0 0 25px #243a32;
+ background:#75877b;box-shadow:inset 0 0 25px #243a32;
 }
 .backwall{
  height:85px;background:linear-gradient(#526f77,#344e57);
@@ -48,28 +47,25 @@ h2{color:#ffd16c}
 }
 .slot{
  position:relative;border:2px dashed #e7e2bc;
- background:#63746c66;display:flex;
- align-items:center;justify-content:center;
- flex-direction:column;min-width:0;
+ background:#63746c66;display:flex;align-items:center;
+ justify-content:center;flex-direction:column;min-width:0;
 }
 .slot:after{
  content:"PARKING";position:absolute;bottom:5px;
  color:#e6e4ce;font-size:8px;letter-spacing:2px;
 }
-.slot .car{font-size:43px;z-index:2;
- filter:drop-shadow(2px 4px 2px #27302d)}
+.car-art{width:100%;max-width:150px;height:auto;display:block;z-index:2}
 .slot.selected{border:3px solid #ffbd42;background:#e9bd5260}
 .slot button{font-size:10px;padding:5px;margin-top:3px;z-index:3}
 .workshop{
  position:absolute;bottom:0;left:0;width:100%;height:42px;
  background:#364b4b;border-top:5px solid #e4b25b;
- display:flex;justify-content:space-around;align-items:center;
- font-size:19px;
+ display:flex;justify-content:space-around;align-items:center;font-size:19px;
 }
 .panel{background:#293e4d;padding:16px;border-radius:10px;margin:12px 0}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .card{background:#344c5b;border:2px solid #536c78;border-radius:10px;padding:12px;text-align:center}
-.card .car{font-size:55px;margin:10px}
+.card .car-art{margin:10px auto}
 .card button{width:100%;margin-top:5px}
 .small{font-size:12px;color:#c1cdd1}
 .actions{display:flex;gap:8px}
@@ -101,7 +97,6 @@ footer{text-align:center;color:#9aabb1;padding:20px}
 
 <section id="garage" class="page">
 <h2>🏠 MY GARAGE</h2>
-
 <div class="scene">
  <div class="backwall">
   <div class="window"></div>
@@ -128,7 +123,7 @@ footer{text-align:center;color:#9aabb1;padding:20px}
 <section id="work" class="page hidden">
 <h2>🔧 WORKSHOP</h2>
 <div class="panel" style="text-align:center">
-<div class="car" id="upgradeEmoji" style="font-size:75px">🏎️</div>
+<div id="upgradeEmoji"></div>
 <h3 id="upgradeName">Starter Car</h3>
 <p>Engine Level: <b id="engine">1</b></p>
 <button onclick="upgradeCar()">UPGRADE ENGINE – 500</button>
@@ -168,8 +163,36 @@ const catalog=[
 {name:"Vintage Sport",emoji:"🚗",price:6500}
 ];
 
+function carArt(car){
+ const colors={
+  0:"#e8e8e8",1:"#35a9d6",2:"#d93636",
+  3:"#b9bdc4",4:"#252a32",5:"#d8a64c",
+  6:"#ff781e",7:"#1679d5",8:"#4d9b69"
+ };
+ const paint={
+  red:"#e53935",blue:"#1689e8",gold:"#e8b832"
+ };
+ const color=paint[car.color]||colors[car.id]||"#e8e8e8";
+ const accent=car.id===6?"#168de2":"#ffffff";
+
+ return `<svg class="car-art" viewBox="0 0 180 90" role="img" aria-label="${catalog[car.id].name}">
+ <ellipse cx="90" cy="76" rx="76" ry="8" fill="#26302b" opacity=".35"/>
+ <path d="M15 58 L23 43 Q27 37 43 35 L61 17 Q67 11 80 11 L119 13 Q129 14 137 27 L153 39 Q164 42 167 54 L164 66 L15 66Z" fill="${color}" stroke="#202b35" stroke-width="3"/>
+ <path d="M49 35 L66 17 Q70 14 80 14 L91 14 L91 35Z" fill="#a8e0ed" stroke="#30434c" stroke-width="3"/>
+ <path d="M97 14 L117 16 Q125 17 132 34 L97 35Z" fill="#a8e0ed" stroke="#30434c" stroke-width="3"/>
+ <path d="M23 48 L157 48" stroke="${accent}" stroke-width="3"/>
+ <path d="M17 56 L31 56" stroke="#fff4bb" stroke-width="5"/>
+ <path d="M151 56 L165 56" stroke="#ff4538" stroke-width="5"/>
+ <circle cx="48" cy="66" r="14" fill="#20262c"/>
+ <circle cx="48" cy="66" r="7" fill="#aeb8bd"/>
+ <circle cx="135" cy="66" r="14" fill="#20262c"/>
+ <circle cx="135" cy="66" r="7" fill="#aeb8bd"/>
+ </svg>`;
+}
+
 let saved;
 try{saved=JSON.parse(localStorage.getItem("cartown"))}catch(e){}
+
 let state=saved||{
  money:5000,level:1,selected:0,
  cars:[{id:0,engine:1,color:"white"}]
@@ -177,32 +200,38 @@ let state=saved||{
 
 function current(){return state.cars[state.selected]}
 function msg(t){document.getElementById("message").textContent=t}
+
 function save(){
  localStorage.setItem("cartown",JSON.stringify(state));
  update();
 }
+
 function update(){
  document.getElementById("money").textContent=state.money;
  document.getElementById("level").textContent=state.level;
  document.getElementById("count").textContent=state.cars.length;
 }
+
 function show(id){
  document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
  document.getElementById(id).classList.remove("hidden");
  render();
 }
+
 function render(){
  if(!current())return;
+
  let c=current(),model=catalog[c.id];
+
  document.getElementById("upgradeName").textContent=model.name;
- document.getElementById("upgradeEmoji").textContent=model.emoji;
+ document.getElementById("upgradeEmoji").innerHTML=carArt(c);
  document.getElementById("engine").textContent=c.engine;
 
  document.getElementById("parking").innerHTML=
  Array.from({length:9},(_,i)=>{
  let car=state.cars[i];
  return `<div class="slot ${i===state.selected?'selected':''}">
- ${car?`<div class="car">${catalog[car.id].emoji}</div>
+ ${car?`${carArt(car)}
  <button onclick="selectCar(${i})">${catalog[car.id].name}</button>`
  :`<div style="font-size:28px">🅿️</div>
  <span class="small">EMPTY</span>`}
@@ -212,7 +241,7 @@ function render(){
  document.getElementById("collection").innerHTML=
  state.cars.map((car,i)=>`
  <div class="card">
- <div class="car">${catalog[car.id].emoji}</div>
+ ${carArt(car)}
  <b>${catalog[car.id].name}</b>
  <p class="small">Engine Level ${car.engine}</p>
  <button onclick="selectCar(${i})">${i===state.selected?"SELECTED":"SELECT"}</button>
@@ -223,7 +252,7 @@ function render(){
  let id=catalog.indexOf(car);
  let owned=state.cars.some(c=>c.id===id);
  return `<div class="card">
- <div class="car">${car.emoji}</div>
+ ${carArt({id,color:"white"})}
  <b>${car.name}</b>
  <p>💰 ${car.price.toLocaleString()}</p>
  <button ${owned?"disabled":""} onclick="buy(${id})">
@@ -231,11 +260,17 @@ function render(){
  </button>
  </div>`;
  }).join("");
+
  update();
 }
+
 function selectCar(i){
- state.selected=i;save();render();msg("Car selected!");
+ state.selected=i;
+ save();
+ render();
+ msg("Car selected!");
 }
+
 function buy(id){
  let car=catalog[id];
  if(state.cars.some(c=>c.id===id)){msg("Already owned!");return}
@@ -243,25 +278,38 @@ function buy(id){
  state.money-=car.price;
  state.cars.push({id,engine:1,color:"white"});
  state.selected=state.cars.length-1;
- save();render();msg(car.name+" purchased!");
+ save();
+ render();
+ msg(car.name+" purchased!");
 }
+
 function upgradeCar(){
  if(state.money<500){msg("Not enough coins!");return}
- state.money-=500;current().engine++;
+ state.money-=500;
+ current().engine++;
  if(current().engine%3===0)state.level++;
- save();render();msg("Engine upgraded!");
+ save();
+ render();
+ msg("Engine upgraded!");
 }
+
 function paint(color){
  if(state.money<200){msg("Need 200 coins!");return}
- state.money-=200;current().color=color;
- save();render();msg("New paint: "+color);
+ state.money-=200;
+ current().color=color;
+ save();
+ render();
+ msg("New paint: "+color);
 }
+
 function race(){
  let reward=Math.floor(200+Math.random()*501);
  state.money+=reward;
  if(reward>550)state.level++;
- save();msg("🏁 You won "+reward+" coins!");
+ save();
+ msg("🏁 You won "+reward+" coins!");
 }
+
 render();
 </script>
 </body>
