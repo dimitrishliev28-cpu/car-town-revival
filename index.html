@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="el">
 <head>
@@ -6,71 +7,92 @@
 <title>Car Town Revival</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#18232c;color:white;font-family:Arial,sans-serif}
-header{text-align:center;background:#253c4a;padding:17px;border-bottom:4px solid #f4ad32}
+body{margin:0;background:#17232b;color:white;font-family:Arial,sans-serif}
+header{text-align:center;background:linear-gradient(#344e5c,#203642);padding:15px;border-bottom:4px solid #e6ad50}
 header h1{margin:0;color:#ffd16c;font-size:27px}
 header p{margin:5px;color:#c4d1d9;letter-spacing:3px;font-size:11px}
-.stats{display:flex;justify-content:space-around;background:#344b59;padding:15px;font-weight:bold}
+.stats{display:flex;justify-content:space-around;background:#344b59;padding:14px;font-weight:bold}
 nav{display:flex;overflow:auto;background:#152630}
-nav button{flex:1;min-width:75px;border-radius:0;background:#263e4c;color:white;padding:15px 4px}
-button{background:#f3ad35;color:#17242c;border:0;border-radius:8px;padding:12px;font-weight:bold}
+nav button{flex:1;min-width:75px;border-radius:0;background:#263e4c;color:white;padding:14px 4px}
+button{background:#f3ad35;color:#17242c;border:0;border-radius:8px;padding:11px;font-weight:bold}
 button:disabled{opacity:.4}
 button:active{transform:scale(.96)}
-.page{padding:14px}
+.page{padding:13px}
 .hidden{display:none}
 h2{color:#ffd16c}
-#message{text-align:center;color:#ffda8a;padding:12px;min-height:42px}
+#message{text-align:center;color:#ffda8a;padding:10px;min-height:38px}
 .scene{
- position:relative;overflow:hidden;height:390px;
- border:5px solid #8c9c9f;border-radius:9px;
- background:#75877b;box-shadow:inset 0 0 25px #243a32;
+ position:relative;overflow:hidden;height:440px;
+ border:5px solid #8d9994;border-radius:9px;
+ background:linear-gradient(#62777a 0 20%,#87948a 20% 100%);
+ box-shadow:inset 0 0 30px #172c2b;
 }
 .backwall{
- height:85px;background:linear-gradient(#526f77,#344e57);
- border-bottom:8px solid #d0a65f;
+ position:absolute;top:0;left:0;width:100%;height:90px;
+ background:linear-gradient(#526f77,#344e57);
+ border-bottom:9px solid #d0a65f;
  display:flex;align-items:center;justify-content:space-around;
+ z-index:2;
 }
 .sign{background:#263b43;border:3px solid #eab44d;padding:10px;
- color:#ffd16c;font-weight:bold;letter-spacing:2px}
-.window{width:45px;height:48px;background:#9fd6db;border:5px solid #304a55}
+ color:#ffd16c;font-weight:bold;letter-spacing:2px;box-shadow:0 3px 5px #17232b}
+.window{width:43px;height:48px;background:linear-gradient(135deg,#c4f0ed,#4e8997);border:5px solid #304a55}
 .floor{
- position:absolute;top:85px;bottom:0;width:100%;
+ position:absolute;top:90px;bottom:0;width:100%;
  background-color:#87938a;
  background-image:
  linear-gradient(90deg,transparent 49%,#d4d1a5 50%,transparent 51%),
  linear-gradient(0deg,transparent 49%,#d4d1a5 50%,transparent 51%);
  background-size:90px 80px;
 }
+.floor:after{
+ content:"";position:absolute;inset:0;
+ background:linear-gradient(135deg,transparent 45%,#ffffff0c 50%,transparent 55%);
+}
 .parking{
- position:absolute;top:105px;left:8%;width:84%;height:235px;
- display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+ position:absolute;top:105px;left:5%;width:90%;height:265px;
+ display:grid;grid-template-columns:repeat(3,1fr);gap:7px;
+ transform:perspective(650px) rotateX(48deg) rotateZ(-25deg) scale(.91);
+ transform-origin:center center;
 }
 .slot{
- position:relative;border:2px dashed #e7e2bc;
- background:#63746c66;display:flex;align-items:center;
- justify-content:center;flex-direction:column;min-width:0;
+ position:relative;border:2px dashed #eee2b5;
+ background:linear-gradient(145deg,#667a70dd,#435c52dd);
+ display:flex;align-items:center;justify-content:center;
+ flex-direction:column;min-width:0;overflow:hidden;
+ box-shadow:inset 0 0 12px #263b35;
 }
 .slot:after{
  content:"PARKING";position:absolute;bottom:5px;
  color:#e6e4ce;font-size:8px;letter-spacing:2px;
 }
-.car-art{width:100%;max-width:150px;height:auto;display:block;z-index:2}
-.slot.selected{border:3px solid #ffbd42;background:#e9bd5260}
-.slot button{font-size:10px;padding:5px;margin-top:3px;z-index:3}
+.slot.selected{border:3px solid #ffbd42;background:#9a8955aa}
+.slot .car-art{width:72%;max-height:90px;z-index:2;filter:drop-shadow(3px 5px 3px #17231f)}
+.slot button{font-size:9px;padding:5px;margin-top:3px;z-index:3;max-width:95%;white-space:nowrap}
+.empty{font-size:25px;z-index:2}
 .workshop{
  position:absolute;bottom:0;left:0;width:100%;height:42px;
- background:#364b4b;border-top:5px solid #e4b25b;
- display:flex;justify-content:space-around;align-items:center;font-size:19px;
+ background:linear-gradient(#465d59,#263d3c);
+ border-top:5px solid #e4b25b;
+ display:flex;justify-content:space-around;align-items:center;
+ font-size:17px;z-index:4;
 }
+.workshop span{color:#ffdb91;font-weight:bold}
 .panel{background:#293e4d;padding:16px;border-radius:10px;margin:12px 0}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .card{background:#344c5b;border:2px solid #536c78;border-radius:10px;padding:12px;text-align:center}
-.card .car-art{margin:10px auto}
+.card .car-art{width:100%;height:95px}
 .card button{width:100%;margin-top:5px}
 .small{font-size:12px;color:#c1cdd1}
 .actions{display:flex;gap:8px}
 .actions button{flex:1}
+#upgradeEmoji{width:130px;height:110px;margin:auto}
 footer{text-align:center;color:#9aabb1;padding:20px}
+@media(max-width:380px){
+ .scene{height:410px}
+ .parking{top:105px;height:245px}
+ .sign{font-size:12px;padding:8px}
+}
 </style>
 </head>
 <body>
@@ -123,28 +145,28 @@ footer{text-align:center;color:#9aabb1;padding:20px}
 <section id="work" class="page hidden">
 <h2>🔧 WORKSHOP</h2>
 <div class="panel" style="text-align:center">
-<div id="upgradeEmoji"></div>
-<h3 id="upgradeName">Starter Car</h3>
-<p>Engine Level: <b id="engine">1</b></p>
-<button onclick="upgradeCar()">UPGRADE ENGINE – 500</button>
+ <div id="upgradeEmoji"></div>
+ <h3 id="upgradeName">Starter Car</h3>
+ <p>Engine Level: <b id="engine">1</b></p>
+ <button onclick="upgradeCar()">UPGRADE ENGINE – 500</button>
 </div>
 <div class="panel">
-<h3>🎨 PAINT SHOP</h3>
-<div class="actions">
-<button onclick="paint('red')">RED</button>
-<button onclick="paint('blue')">BLUE</button>
-<button onclick="paint('gold')">GOLD</button>
-</div>
+ <h3>🎨 PAINT SHOP</h3>
+ <div class="actions">
+  <button onclick="paint('red')">RED</button>
+  <button onclick="paint('blue')">BLUE</button>
+  <button onclick="paint('gold')">GOLD</button>
+ </div>
 </div>
 </section>
 
 <section id="race" class="page hidden">
 <h2>🏁 RACE TRACK</h2>
 <div class="panel" style="text-align:center">
-<div style="font-size:75px">🏎️ 🏁 🏎️</div>
-<h3>STREET RACE</h3>
-<p>Win coins and increase your level!</p>
-<button onclick="race()">START RACE</button>
+ <div style="font-size:75px">🏎️ 🏁 🏎️</div>
+ <h3>STREET RACE</h3>
+ <p>Win coins and increase your level!</p>
+ <button onclick="race()">START RACE</button>
 </div>
 </section>
 
@@ -152,54 +174,58 @@ footer{text-align:center;color:#9aabb1;padding:20px}
 
 <script>
 const catalog=[
-{name:"Starter Car",emoji:"🏎️",price:0},
-{name:"City Sport",emoji:"🚗",price:2000},
-{name:"Supercar",emoji:"🏎️",price:5000},
-{name:"Luxury Coupe",emoji:"🚘",price:8000},
-{name:"Racing Beast",emoji:"🏎️",price:12000},
-{name:"Classic Car",emoji:"🚙",price:3500},
-{name:"McLaren Orange",emoji:"🏎️",price:15000},
-{name:"Blue Racer",emoji:"🚘",price:11000},
-{name:"Vintage Sport",emoji:"🚗",price:6500}
+ {name:"Starter Car",emoji:"🏎️",price:0,paint:"#e5e5df"},
+ {name:"City Sport",emoji:"🚗",price:2000,paint:"#d93636"},
+ {name:"Supercar",emoji:"🏎️",price:5000,paint:"#2468c5"},
+ {name:"Luxury Coupe",emoji:"🚘",price:8000,paint:"#202b38"},
+ {name:"Racing Beast",emoji:"🏎️",price:12000,paint:"#e8c04d"},
+ {name:"Classic Car",emoji:"🚙",price:3500,paint:"#478a58"},
+ {name:"McLaren Orange",emoji:"🏎️",price:15000,paint:"#f47721"},
+ {name:"Blue Racer",emoji:"🚘",price:11000,paint:"#2385d8"},
+ {name:"Vintage Sport",emoji:"🚗",price:6500,paint:"#a84b43"}
 ];
-
-function carArt(car){
- const colors={
-  0:"#e8e8e8",1:"#35a9d6",2:"#d93636",
-  3:"#b9bdc4",4:"#252a32",5:"#d8a64c",
-  6:"#ff781e",7:"#1679d5",8:"#4d9b69"
- };
- const paint={
-  red:"#e53935",blue:"#1689e8",gold:"#e8b832"
- };
- const color=paint[car.color]||colors[car.id]||"#e8e8e8";
- const accent=car.id===6?"#168de2":"#ffffff";
-
- return `<svg class="car-art" viewBox="0 0 180 90" role="img" aria-label="${catalog[car.id].name}">
- <ellipse cx="90" cy="76" rx="76" ry="8" fill="#26302b" opacity=".35"/>
- <path d="M15 58 L23 43 Q27 37 43 35 L61 17 Q67 11 80 11 L119 13 Q129 14 137 27 L153 39 Q164 42 167 54 L164 66 L15 66Z" fill="${color}" stroke="#202b35" stroke-width="3"/>
- <path d="M49 35 L66 17 Q70 14 80 14 L91 14 L91 35Z" fill="#a8e0ed" stroke="#30434c" stroke-width="3"/>
- <path d="M97 14 L117 16 Q125 17 132 34 L97 35Z" fill="#a8e0ed" stroke="#30434c" stroke-width="3"/>
- <path d="M23 48 L157 48" stroke="${accent}" stroke-width="3"/>
- <path d="M17 56 L31 56" stroke="#fff4bb" stroke-width="5"/>
- <path d="M151 56 L165 56" stroke="#ff4538" stroke-width="5"/>
- <circle cx="48" cy="66" r="14" fill="#20262c"/>
- <circle cx="48" cy="66" r="7" fill="#aeb8bd"/>
- <circle cx="135" cy="66" r="14" fill="#20262c"/>
- <circle cx="135" cy="66" r="7" fill="#aeb8bd"/>
- </svg>`;
-}
 
 let saved;
 try{saved=JSON.parse(localStorage.getItem("cartown"))}catch(e){}
-
 let state=saved||{
  money:5000,level:1,selected:0,
  cars:[{id:0,engine:1,color:"white"}]
 };
 
+if(!Array.isArray(state.cars)||!state.cars.length){
+ state.cars=[{id:0,engine:1,color:"white"}];
+ state.selected=0;
+}
+state.selected=Math.max(0,Math.min(state.selected||0,state.cars.length-1));
+
 function current(){return state.cars[state.selected]}
 function msg(t){document.getElementById("message").textContent=t}
+
+function carArt(id,color){
+ let model=catalog[id]||catalog[0];
+ let colors={
+  white:"#e5e5df",red:"#d93636",blue:"#2468c5",gold:"#d9ad38"
+ };
+ let body=colors[color]||model.paint;
+ let accent=id===6?"#168ed0":"#f3f0df";
+ return `<svg class="car-art" viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
+ <ellipse cx="50" cy="78" rx="39" ry="65" fill="#17231f" opacity=".35"/>
+ <rect x="10" y="31" width="12" height="30" rx="5" fill="#171b20"/>
+ <rect x="78" y="31" width="12" height="30" rx="5" fill="#171b20"/>
+ <rect x="10" y="91" width="12" height="30" rx="5" fill="#171b20"/>
+ <rect x="78" y="91" width="12" height="30" rx="5" fill="#171b20"/>
+ <path d="M28 10 Q50 0 72 10 L84 35 L88 112 Q84 137 50 143 Q16 137 12 112 L16 35Z" fill="${body}" stroke="#202a2d" stroke-width="3"/>
+ <path d="M27 20 Q50 12 73 20 L78 48 L22 48Z" fill="#263d4a" stroke="#a8d8e2" stroke-width="2"/>
+ <path d="M22 54 L78 54 L75 91 L25 91Z" fill="#314c59" stroke="#b4dce0" stroke-width="2"/>
+ <path d="M25 97 L75 97 L70 119 Q50 130 30 119Z" fill="#263d4a" stroke="#a8d8e2" stroke-width="2"/>
+ <path d="M17 35 L25 30 L25 43 L17 47Z" fill="#fff1b1"/>
+ <path d="M83 35 L75 30 L75 43 L83 47Z" fill="#fff1b1"/>
+ <path d="M17 111 L25 115 L25 123 L17 120Z" fill="#ef4d3c"/>
+ <path d="M83 111 L75 115 L75 123 L83 120Z" fill="#ef4d3c"/>
+ <path d="M45 7 L55 7 L55 140 L45 140Z" fill="${accent}" opacity="${id===6?".9":".12"}"/>
+ <path d="M30 12 Q50 5 70 12" fill="none" stroke="#ffffff" stroke-width="2" opacity=".55"/>
+ </svg>`;
+}
 
 function save(){
  localStorage.setItem("cartown",JSON.stringify(state));
@@ -220,94 +246,79 @@ function show(id){
 
 function render(){
  if(!current())return;
-
- let c=current(),model=catalog[c.id];
-
+ let c=current(),model=catalog[c.id]||catalog[0];
  document.getElementById("upgradeName").textContent=model.name;
- document.getElementById("upgradeEmoji").innerHTML=carArt(c);
+ document.getElementById("upgradeEmoji").innerHTML=carArt(c.id,c.color);
  document.getElementById("engine").textContent=c.engine;
 
  document.getElementById("parking").innerHTML=
  Array.from({length:9},(_,i)=>{
- let car=state.cars[i];
- return `<div class="slot ${i===state.selected?'selected':''}">
- ${car?`${carArt(car)}
- <button onclick="selectCar(${i})">${catalog[car.id].name}</button>`
- :`<div style="font-size:28px">🅿️</div>
- <span class="small">EMPTY</span>`}
- </div>`;
+  let car=state.cars[i];
+  return `<div class="slot ${i===state.selected?'selected':''}">
+  ${car?`${carArt(car.id,car.color)}
+  <button onclick="selectCar(${i})">${catalog[car.id].name}</button>`
+  :`<div class="empty">🅿️</div><span class="small">EMPTY</span>`}
+  </div>`;
  }).join("");
 
  document.getElementById("collection").innerHTML=
  state.cars.map((car,i)=>`
  <div class="card">
- ${carArt(car)}
- <b>${catalog[car.id].name}</b>
- <p class="small">Engine Level ${car.engine}</p>
- <button onclick="selectCar(${i})">${i===state.selected?"SELECTED":"SELECT"}</button>
+  ${carArt(car.id,car.color)}
+  <b>${catalog[car.id].name}</b>
+  <p class="small">Engine Level ${car.engine}</p>
+  <button onclick="selectCar(${i})">${i===state.selected?"SELECTED":"SELECT"}</button>
  </div>`).join("");
 
  document.getElementById("shopCars").innerHTML=
  catalog.slice(1).map(car=>{
- let id=catalog.indexOf(car);
- let owned=state.cars.some(c=>c.id===id);
- return `<div class="card">
- ${carArt({id,color:"white"})}
- <b>${car.name}</b>
- <p>💰 ${car.price.toLocaleString()}</p>
- <button ${owned?"disabled":""} onclick="buy(${id})">
- ${owned?"OWNED":"BUY CAR"}
- </button>
- </div>`;
+  let id=catalog.indexOf(car);
+  let owned=state.cars.some(c=>c.id===id);
+  return `<div class="card">
+   ${carArt(id,"white")}
+   <b>${car.name}</b>
+   <p>💰 ${car.price.toLocaleString()}</p>
+   <button ${owned?"disabled":""} onclick="buy(${id})">
+    ${owned?"OWNED":"BUY CAR"}
+   </button>
+  </div>`;
  }).join("");
-
  update();
 }
 
 function selectCar(i){
- state.selected=i;
- save();
- render();
- msg("Car selected!");
+ state.selected=i;save();render();msg("Car selected!");
 }
 
 function buy(id){
  let car=catalog[id];
  if(state.cars.some(c=>c.id===id)){msg("Already owned!");return}
+ if(state.cars.length>=9){msg("Your garage is full!");return}
  if(state.money<car.price){msg("Not enough coins!");return}
  state.money-=car.price;
  state.cars.push({id,engine:1,color:"white"});
  state.selected=state.cars.length-1;
- save();
- render();
- msg(car.name+" purchased!");
+ save();render();msg(car.name+" purchased!");
 }
 
 function upgradeCar(){
  if(state.money<500){msg("Not enough coins!");return}
- state.money-=500;
- current().engine++;
+ state.money-=500;current().engine++;
  if(current().engine%3===0)state.level++;
- save();
- render();
- msg("Engine upgraded!");
+ save();render();msg("Engine upgraded!");
 }
 
 function paint(color){
  if(state.money<200){msg("Need 200 coins!");return}
- state.money-=200;
- current().color=color;
- save();
- render();
- msg("New paint: "+color);
+ state.money-=200;current().color=color;
+ save();render();msg("New paint: "+color);
 }
 
 function race(){
  let reward=Math.floor(200+Math.random()*501);
  state.money+=reward;
  if(reward>550)state.level++;
- save();
- msg("🏁 You won "+reward+" coins!");
+ save();msg("🏁 You won "+reward+" coins!");
 }
 
 render();
