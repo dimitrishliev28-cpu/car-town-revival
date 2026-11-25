@@ -1,124 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="el">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Car Town Revival - 3D Garage</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Car Town Revival</title>
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;background:#090f18;color:white;
- font-family:Arial,sans-serif;
-}
-header{
- text-align:center;padding:20px;
- background:#080d13;border-bottom:2px solid #e9a52e;
-}
-header h1{margin:0;color:#ffb52e;letter-spacing:3px}
-header p{color:#8999a9;font-size:11px;letter-spacing:4px}
-.stats{
- display:flex;justify-content:space-around;
- padding:16px;background:#172331;
- font-weight:bold;
-}
-nav{display:flex;background:#101b28;overflow:auto}
-button{
- border:0;border-radius:8px;padding:13px;
- background:#e9a52e;color:#111820;
- font-weight:bold;cursor:pointer;
-}
-nav button{
- flex:1;min-width:80px;border-radius:0;
- background:#172331;color:white;padding:15px 5px;
-}
-button:active{transform:scale(.97)}
-.page{padding:15px}
+body{margin:0;background:#18232c;color:white;font-family:Arial,sans-serif}
+header{text-align:center;background:#253c4a;padding:17px;border-bottom:4px solid #f4ad32}
+header h1{margin:0;color:#ffd16c;font-size:27px}
+header p{margin:5px;color:#c4d1d9;letter-spacing:3px;font-size:11px}
+.stats{display:flex;justify-content:space-around;background:#344b59;padding:15px;font-weight:bold}
+nav{display:flex;overflow:auto;background:#152630}
+nav button{flex:1;min-width:75px;border-radius:0;background:#263e4c;color:white;padding:15px 4px}
+button{background:#f3ad35;color:#17242c;border:0;border-radius:8px;padding:12px;font-weight:bold}
+button:disabled{opacity:.4}
+button:active{transform:scale(.96)}
+.page{padding:14px}
 .hidden{display:none}
-h2{color:#ffbd45}
-#message{text-align:center;color:#ffcf72;padding:13px;min-height:40px}
+h2{color:#ffd16c}
+#message{text-align:center;color:#ffda8a;padding:12px;min-height:42px}
 .scene{
- height:300px;position:relative;overflow:hidden;
- border:1px solid #667989;border-radius:13px;
- background:linear-gradient(180deg,#182c42 0%,#293b4d 55%,#101923 100%);
- perspective:650px;
+ position:relative;overflow:hidden;height:390px;
+ border:5px solid #8c9c9f;border-radius:9px;
+ background:#75877b;
+ box-shadow:inset 0 0 25px #243a32;
 }
-.ceiling{
- position:absolute;top:0;left:0;width:100%;height:65px;
- background:repeating-linear-gradient(90deg,#182532 0 65px,#293a48 66px 70px);
- border-bottom:3px solid #627080;
+.backwall{
+ height:85px;background:linear-gradient(#526f77,#344e57);
+ border-bottom:8px solid #d0a65f;
+ display:flex;align-items:center;justify-content:space-around;
 }
-.lights{
- position:absolute;top:55px;left:10%;width:80%;height:4px;
- background:#d5f4ff;box-shadow:0 0 12px 5px #7ccfff;
-}
-.wall{
- position:absolute;top:70px;left:0;width:100%;height:100px;
- background:linear-gradient(90deg,#283947,#526170,#283947);
-}
-.wall:after{
- content:"CAR TOWN";position:absolute;top:20px;left:0;
- width:100%;text-align:center;font-size:25px;
- font-weight:bold;letter-spacing:8px;color:#f1b94f;
- text-shadow:0 0 15px #ffb52e;
-}
+.sign{background:#263b43;border:3px solid #eab44d;padding:10px;
+ color:#ffd16c;font-weight:bold;letter-spacing:2px}
+.window{width:45px;height:48px;background:#9fd6db;border:5px solid #304a55}
 .floor{
- position:absolute;bottom:-55px;left:-10%;width:120%;height:190px;
- transform:rotateX(58deg);
- background:repeating-linear-gradient(90deg,transparent 0 65px,#66778744 66px 68px),
- repeating-linear-gradient(0deg,#303d48 0 35px,#566472 36px 37px);
- border-top:4px solid #8293a0;
+ position:absolute;top:85px;bottom:0;width:100%;
+ background-color:#87938a;
+ background-image:
+ linear-gradient(90deg,transparent 49%,#d4d1a5 50%,transparent 51%),
+ linear-gradient(0deg,transparent 49%,#d4d1a5 50%,transparent 51%);
+ background-size:90px 80px;
 }
-.car-platform{
- position:absolute;bottom:39px;left:50%;
- transform:translateX(-50%);
- width:75%;height:45px;border-radius:50%;
- background:#111c28;border:2px solid #f1ad35;
- box-shadow:0 0 20px #e9a52e88;
+.parking{
+ position:absolute;top:105px;left:8%;width:84%;height:235px;
+ display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
 }
-.car-display{
- position:absolute;bottom:57px;left:50%;
- transform:translateX(-50%);
- font-size:105px;
- filter:drop-shadow(0 13px 7px #000);
- z-index:3;
+.slot{
+ position:relative;border:2px dashed #e7e2bc;
+ background:#63746c66;display:flex;
+ align-items:center;justify-content:center;
+ flex-direction:column;min-width:0;
 }
-.car-name{
- position:absolute;bottom:10px;width:100%;
- text-align:center;font-weight:bold;
- color:#ffc45d;z-index:4;
+.slot:after{
+ content:"PARKING";position:absolute;bottom:5px;
+ color:#e6e4ce;font-size:8px;letter-spacing:2px;
 }
-.scene-label{
- position:absolute;top:12px;left:12px;z-index:5;
- font-size:10px;letter-spacing:2px;color:#bcd4e6;
+.slot .car{font-size:43px;z-index:2;
+ filter:drop-shadow(2px 4px 2px #27302d)}
+.slot.selected{border:3px solid #ffbd42;background:#e9bd5260}
+.slot button{font-size:10px;padding:5px;margin-top:3px;z-index:3}
+.workshop{
+ position:absolute;bottom:0;left:0;width:100%;height:42px;
+ background:#364b4b;border-top:5px solid #e4b25b;
+ display:flex;justify-content:space-around;align-items:center;
+ font-size:19px;
 }
-.controls{display:flex;gap:12px;margin-top:14px}
-.controls button{flex:1}
-.panel{
- background:#1a2938;padding:17px;
- border:1px solid #34495c;border-radius:12px;
- margin-bottom:14px;
-}
-.grid{
- display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
- gap:12px;
-}
-.car-card{
- text-align:center;background:#1c2d3d;
- border:1px solid #405365;border-radius:12px;padding:12px;
-}
-.car-card .car{font-size:55px;margin:8px}
-.car-card button{width:100%}
-.small{font-size:12px;color:#aebdca}
-.actions{display:flex;gap:8px;flex-wrap:wrap}
+.panel{background:#293e4d;padding:16px;border-radius:10px;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:#344c5b;border:2px solid #536c78;border-radius:10px;padding:12px;text-align:center}
+.card .car{font-size:55px;margin:10px}
+.card button{width:100%;margin-top:5px}
+.small{font-size:12px;color:#c1cdd1}
+.actions{display:flex;gap:8px}
 .actions button{flex:1}
-footer{text-align:center;color:#718294;padding:20px}
+footer{text-align:center;color:#9aabb1;padding:20px}
 </style>
 </head>
 <body>
 
 <header>
 <h1>🚗 CAR TOWN</h1>
-<p>REVIVAL EDITION · 3D GARAGE</p>
+<p>REVIVAL EDITION</p>
 </header>
 
 <div class="stats">
@@ -130,51 +93,48 @@ footer{text-align:center;color:#718294;padding:20px}
 <nav>
 <button onclick="show('garage')">🏠 Garage</button>
 <button onclick="show('shop')">🛒 Shop</button>
-<button onclick="show('upgrade')">🔧 Upgrade</button>
+<button onclick="show('work')">🔧 Workshop</button>
 <button onclick="show('race')">🏁 Race</button>
 </nav>
 
-<div id="message">Welcome to your new 3D Garage!</div>
+<div id="message">Welcome to Car Town!</div>
 
 <section id="garage" class="page">
-<h2>MY 3D GARAGE</h2>
+<h2>🏠 MY GARAGE</h2>
 
 <div class="scene">
-<div class="ceiling"></div>
-<div class="lights"></div>
-<div class="wall"></div>
-<div class="floor"></div>
-<div class="scene-label">PRIVATE SHOWROOM</div>
-<div class="car-platform"></div>
-<div class="car-display" id="mainCar">🏎️</div>
-<div class="car-name" id="carName">STARTER CAR</div>
+ <div class="backwall">
+  <div class="window"></div>
+  <div class="sign">CAR TOWN</div>
+  <div class="window"></div>
+ </div>
+ <div class="floor"></div>
+ <div class="parking" id="parking"></div>
+ <div class="workshop">
+  <span>🔧</span><span>🛞</span>
+  <span>🧰 WORKSHOP</span><span>🛢️</span>
+ </div>
 </div>
 
-<div class="controls">
-<button onclick="previousCar()">◀ PREVIOUS</button>
-<button onclick="nextCar()">NEXT ▶</button>
-</div>
-
-<h2>MY COLLECTION</h2>
+<h2>🚘 MY COLLECTION</h2>
 <div class="grid" id="collection"></div>
 </section>
 
 <section id="shop" class="page hidden">
-<h2>CAR DEALERSHIP</h2>
+<h2>🛒 CAR DEALERSHIP</h2>
 <div class="grid" id="shopCars"></div>
 </section>
 
-<section id="upgrade" class="page hidden">
-<h2>WORKSHOP</h2>
+<section id="work" class="page hidden">
+<h2>🔧 WORKSHOP</h2>
 <div class="panel" style="text-align:center">
-<div style="font-size:80px" id="upgradeEmoji">🏎️</div>
+<div class="car" id="upgradeEmoji" style="font-size:75px">🏎️</div>
 <h3 id="upgradeName">Starter Car</h3>
 <p>Engine Level: <b id="engine">1</b></p>
-<p>Upgrade price: 500 coins</p>
-<button onclick="upgradeCar()">UPGRADE ENGINE</button>
+<button onclick="upgradeCar()">UPGRADE ENGINE – 500</button>
 </div>
 <div class="panel">
-<h3>PAINT SHOP 🎨</h3>
+<h3>🎨 PAINT SHOP</h3>
 <div class="actions">
 <button onclick="paint('red')">RED</button>
 <button onclick="paint('blue')">BLUE</button>
@@ -184,9 +144,9 @@ footer{text-align:center;color:#718294;padding:20px}
 </section>
 
 <section id="race" class="page hidden">
-<h2>RACE TRACK</h2>
+<h2>🏁 RACE TRACK</h2>
 <div class="panel" style="text-align:center">
-<div style="font-size:85px">🏎️ 🏁 🏎️</div>
+<div style="font-size:75px">🏎️ 🏁 🏎️</div>
 <h3>STREET RACE</h3>
 <p>Win coins and increase your level!</p>
 <button onclick="race()">START RACE</button>
@@ -202,133 +162,106 @@ const catalog=[
 {name:"Supercar",emoji:"🏎️",price:5000},
 {name:"Luxury Coupe",emoji:"🚘",price:8000},
 {name:"Racing Beast",emoji:"🏎️",price:12000},
-{name:"Classic Car",emoji:"🚙",price:3500}
+{name:"Classic Car",emoji:"🚙",price:3500},
+{name:"McLaren Orange",emoji:"🏎️",price:15000},
+{name:"Blue Racer",emoji:"🚘",price:11000},
+{name:"Vintage Sport",emoji:"🚗",price:6500}
 ];
 
 let saved;
 try{saved=JSON.parse(localStorage.getItem("cartown"))}catch(e){}
 let state=saved||{
-money:5000,level:1,selected:0,
-cars:[{id:0,engine:1,color:"white"}]
+ money:5000,level:1,selected:0,
+ cars:[{id:0,engine:1,color:"white"}]
 };
 
+function current(){return state.cars[state.selected]}
+function msg(t){document.getElementById("message").textContent=t}
 function save(){
-localStorage.setItem("cartown",JSON.stringify(state));
-update();
+ localStorage.setItem("cartown",JSON.stringify(state));
+ update();
 }
-
-function msg(t){
-document.getElementById("message").textContent=t;
-}
-
-function current(){
-return state.cars[state.selected];
-}
-
-function show(id){
-document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
-document.getElementById(id).classList.remove("hidden");
-render();
-}
-
 function update(){
-document.getElementById("money").textContent=state.money;
-document.getElementById("level").textContent=state.level;
-document.getElementById("count").textContent=state.cars.length;
+ document.getElementById("money").textContent=state.money;
+ document.getElementById("level").textContent=state.level;
+ document.getElementById("count").textContent=state.cars.length;
 }
-
+function show(id){
+ document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
+ document.getElementById(id).classList.remove("hidden");
+ render();
+}
 function render(){
-let c=current();
-if(!c)return;
-let model=catalog[c.id];
+ if(!current())return;
+ let c=current(),model=catalog[c.id];
+ document.getElementById("upgradeName").textContent=model.name;
+ document.getElementById("upgradeEmoji").textContent=model.emoji;
+ document.getElementById("engine").textContent=c.engine;
 
-document.getElementById("mainCar").textContent=model.emoji;
-document.getElementById("carName").textContent=model.name.toUpperCase();
-document.getElementById("mainCar").style.filter=
-"drop-shadow(0 13px 7px #000)";
+ document.getElementById("parking").innerHTML=
+ Array.from({length:9},(_,i)=>{
+ let car=state.cars[i];
+ return `<div class="slot ${i===state.selected?'selected':''}">
+ ${car?`<div class="car">${catalog[car.id].emoji}</div>
+ <button onclick="selectCar(${i})">${catalog[car.id].name}</button>`
+ :`<div style="font-size:28px">🅿️</div>
+ <span class="small">EMPTY</span>`}
+ </div>`;
+ }).join("");
 
-document.getElementById("upgradeName").textContent=model.name;
-document.getElementById("upgradeEmoji").textContent=model.emoji;
-document.getElementById("engine").textContent=c.engine;
+ document.getElementById("collection").innerHTML=
+ state.cars.map((car,i)=>`
+ <div class="card">
+ <div class="car">${catalog[car.id].emoji}</div>
+ <b>${catalog[car.id].name}</b>
+ <p class="small">Engine Level ${car.engine}</p>
+ <button onclick="selectCar(${i})">${i===state.selected?"SELECTED":"SELECT"}</button>
+ </div>`).join("");
 
-document.getElementById("collection").innerHTML=
-state.cars.map((car,i)=>`
-<div class="car-card">
-<div class="car">${catalog[car.id].emoji}</div>
-<b>${catalog[car.id].name}</b>
-<p class="small">Engine Level ${car.engine}</p>
-<button onclick="selectCar(${i})">
-${i===state.selected?"SELECTED":"SELECT"}
-</button>
-</div>`).join("");
-
-document.getElementById("shopCars").innerHTML=
-catalog.slice(1).map(car=>{
-let id=catalog.indexOf(car);
-let owned=state.cars.some(c=>c.id===id);
-return `<div class="car-card">
-<div class="car">${car.emoji}</div>
-<b>${car.name}</b>
-<p>💰 ${car.price.toLocaleString()}</p>
-<button ${owned?"disabled":""} onclick="buy(${id})">
-${owned?"OWNED":"BUY CAR"}
-</button>
-</div>`;
-}).join("");
-update();
+ document.getElementById("shopCars").innerHTML=
+ catalog.slice(1).map(car=>{
+ let id=catalog.indexOf(car);
+ let owned=state.cars.some(c=>c.id===id);
+ return `<div class="card">
+ <div class="car">${car.emoji}</div>
+ <b>${car.name}</b>
+ <p>💰 ${car.price.toLocaleString()}</p>
+ <button ${owned?"disabled":""} onclick="buy(${id})">
+ ${owned?"OWNED":"BUY CAR"}
+ </button>
+ </div>`;
+ }).join("");
+ update();
 }
-
 function selectCar(i){
-state.selected=i;
-save();render();msg("Car selected!");
+ state.selected=i;save();render();msg("Car selected!");
 }
-function previousCar(){
-state.selected=(state.selected-1+state.cars.length)%state.cars.length;
-save();render();
-}
-function nextCar(){
-state.selected=(state.selected+1)%state.cars.length;
-save();render();
-}
-
 function buy(id){
-let car=catalog[id];
-if(state.cars.some(c=>c.id===id)){
-msg("You already own this car!");return;
+ let car=catalog[id];
+ if(state.cars.some(c=>c.id===id)){msg("Already owned!");return}
+ if(state.money<car.price){msg("Not enough coins!");return}
+ state.money-=car.price;
+ state.cars.push({id,engine:1,color:"white"});
+ state.selected=state.cars.length-1;
+ save();render();msg(car.name+" purchased!");
 }
-if(state.money<car.price){
-msg("Not enough money!");return;
-}
-state.money-=car.price;
-state.cars.push({id,engine:1,color:"white"});
-state.selected=state.cars.length-1;
-save();render();msg(car.name+" purchased!");
-}
-
 function upgradeCar(){
-let c=current();
-if(state.money<500){msg("Not enough coins!");return;}
-state.money-=500;
-c.engine++;
-if(c.engine%3===0)state.level++;
-save();render();msg("Engine upgraded to level "+c.engine);
+ if(state.money<500){msg("Not enough coins!");return}
+ state.money-=500;current().engine++;
+ if(current().engine%3===0)state.level++;
+ save();render();msg("Engine upgraded!");
 }
-
 function paint(color){
-if(state.money<200){msg("Need 200 coins!");return;}
-state.money-=200;
-current().color=color;
-save();render();msg("New paint: "+color);
+ if(state.money<200){msg("Need 200 coins!");return}
+ state.money-=200;current().color=color;
+ save();render();msg("New paint: "+color);
 }
-
 function race(){
-let reward=Math.floor(200+Math.random()*501);
-state.money+=reward;
-if(reward>550)state.level++;
-save();
-msg("Race finished! You won "+reward+" coins!");
+ let reward=Math.floor(200+Math.random()*501);
+ state.money+=reward;
+ if(reward>550)state.level++;
+ save();msg("🏁 You won "+reward+" coins!");
 }
-
 render();
 </script>
 </body>
